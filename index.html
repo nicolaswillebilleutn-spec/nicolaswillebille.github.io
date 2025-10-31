@@ -23,16 +23,16 @@
             grid-column: 1 / -1;
         }
         
-        /* Contenedor principal con Flexbox (se ajustará a 3 columnas si hay espacio) */
+        /* Contenedor principal con Flexbox */
         .main-container {
             display: flex;
             gap: 40px;
-            flex-wrap: wrap; /* Permite que se apilen en pantallas pequeñas */
-            justify-content: center; /* Centra las columnas si hay menos de 3 */
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .column {
-            flex: 1 1 300px; /* Base flexible: crecer, no encoger, ancho base 300px */
+            flex: 1 1 300px;
             min-width: 300px;
         }
 
@@ -54,6 +54,9 @@
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
             margin-top: 0;
+            /* Importante para la edición del título */
+            outline: none; 
+            cursor: text;
         }
         
         /* Lista de unidades */
@@ -88,6 +91,7 @@
             min-width: 20px;
             text-align: center;
         }
+        /* Permite la edición en el navegador */
         .item-text {
             flex-grow: 1;
             min-height: 1.2em; 
@@ -110,17 +114,17 @@
             color: #28a745;
         }
 
-        /* Estilos para Analisis Matematico - Diferente color */
+        /* Estilos para Analisis Matematico */
         .analisis-matematico h2 {
-            color: #cc5200; /* Naranja/Tostado */
+            color: #cc5200;
         }
         .analisis-matematico .materia-card {
             border-left: 5px solid #cc5200;
         }
 
-        /* ESTILOS NUEVOS: Algebra y Geometría Analítica */
+        /* ESTILOS para Algebra y Geometría Analítica */
         .algebra-geometrica h2 {
-            color: #8b0000; /* Borgoña/Rojo Oscuro */
+            color: #8b0000;
         }
         .algebra-geometrica .materia-card {
             border-left: 5px solid #8b0000;
@@ -132,7 +136,7 @@
     <h1>📝 Planificador de Cursada - Ingeniería UTN FRC</h1>
 
     <div class="main-container">
-        <div class="column">
+        <div class="column fisica">
             <div class="materia-card">
                 <h2>FÍSICA I - 15 Unidades</h2>
                 <div id="fisica-list">
@@ -159,16 +163,15 @@
 
                         UNIDADES_FISICA.forEach((nombre, index) => {
                             const cardHtml = `
-                                <div class="materia-card">
-                                    <h2>${nombre}</h2>
-                                    <ul class="unidad-list">
+                                <div class="materia-card" data-unidad-card-id="FIS-${index + 1}">
+                                    <h2>${nombre.split(':')[0]}</h2> <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Fisica')" data-unidad-id="FIS-${index + 1}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Teoría/Conceptos</span>
+                                            <span class="item-text" contenteditable="true">${nombre} (Teoría)</span>
                                         </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Fisica')" data-unidad-id="FIS-${index + 1}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Práctica/Problemas</span>
+                                            <span class="item-text" contenteditable="true">Práctica de ${nombre.split(':')[0]}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -190,16 +193,16 @@
 
                         for (let i = 1; i <= NUM_UNIDADES_ANALISIS; i++) {
                             const cardHtml = `
-                                <div class="materia-card">
-                                    <h2>Unidad ${i}</h2>
+                                <div class="materia-card" data-unidad-card-id="ANA-${i}">
+                                    <h2 contenteditable="true" data-title-id="ANA-H2-${i}">Unidad ${i}</h2>
                                     <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Analisis')" data-unidad-id="ANA-${i}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Tema ${i}.1 (Escribir aquí el tema)</span>
+                                            <span class="item-text" contenteditable="true"></span>
                                         </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Analisis')" data-unidad-id="ANA-${i}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Tema ${i}.2 (Escribir aquí el tema)</span>
+                                            <span class="item-text" contenteditable="true"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -221,16 +224,16 @@
 
                         for (let i = 1; i <= NUM_UNIDADES_ALGEBRA; i++) {
                             const cardHtml = `
-                                <div class="materia-card">
-                                    <h2>Unidad ${i}</h2>
+                                <div class="materia-card" data-unidad-card-id="ALG-${i}">
+                                    <h2 contenteditable="true" data-title-id="ALG-H2-${i}">Unidad ${i}</h2>
                                     <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Algebra')" data-unidad-id="ALG-${i}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Tema ${i}.1 (Escribir aquí el tema)</span>
+                                            <span class="item-text" contenteditable="true"></span>
                                         </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Algebra')" data-unidad-id="ALG-${i}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Tema ${i}.2 (Escribir aquí el tema)</span>
+                                            <span class="item-text" contenteditable="true"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -245,48 +248,68 @@
 
     <script>
         /**
-         * Funciones para manejar la persistencia del estado (Completado)
-         * Se han actualizado para incluir "Algebra".
+         * Funciones para manejar la persistencia del estado (Completado y Texto Personalizado)
          */
 
+        // Claves de estado de progreso
         const STORAGE_KEY_FISICA = 'unidadesFisicaICompletadas';
         const STORAGE_KEY_ANALISIS = 'unidadesAnalisisICompletadas';
-        const STORAGE_KEY_ALGEBRA = 'unidadesAlgebraICompletadas'; // NUEVA CLAVE
+        const STORAGE_KEY_ALGEBRA = 'unidadesAlgebraICompletadas';
+        // Claves de nombres personalizados (para los items de lista)
+        const CUSTOM_NAMES_KEY_FISICA = 'fisicaCustomNames';
+        const CUSTOM_NAMES_KEY_ANALISIS = 'analisisCustomNames';
+        const CUSTOM_NAMES_KEY_ALGEBRA = 'algebraCustomNames';
+        // Claves de títulos de unidad (para los <h2>)
+        const TITLE_NAMES_KEY_ANALISIS = 'analisisTitleNames'; // NUEVA CLAVE
+        const TITLE_NAMES_KEY_ALGEBRA = 'algebraTitleNames';   // NUEVA CLAVE
+
 
         function getStorageKey(materia) {
             if (materia === 'Fisica') return STORAGE_KEY_FISICA;
             if (materia === 'Analisis') return STORAGE_KEY_ANALISIS;
-            if (materia === 'Algebra') return STORAGE_KEY_ALGEBRA; // NUEVO
+            if (materia === 'Algebra') return STORAGE_KEY_ALGEBRA;
             return null;
         }
 
         function getContainerId(materia) {
             if (materia === 'Fisica') return 'fisica-list';
             if (materia === 'Analisis') return 'analisis-list';
-            if (materia === 'Algebra') return 'algebra-list'; // NUEVO
+            if (materia === 'Algebra') return 'algebra-list';
+            return null;
+        }
+        
+        function getCustomNamesStorageKey(materia) {
+            if (materia === 'Fisica') return CUSTOM_NAMES_KEY_FISICA;
+            if (materia === 'Analisis') return CUSTOM_NAMES_KEY_ANALISIS;
+            if (materia === 'Algebra') return CUSTOM_NAMES_KEY_ALGEBRA;
+            return null;
+        }
+        
+        // NUEVA FUNCIÓN para obtener la clave de los títulos
+        function getTitleNamesStorageKey(materia) {
+            if (materia === 'Analisis') return TITLE_NAMES_KEY_ANALISIS;
+            if (materia === 'Algebra') return TITLE_NAMES_KEY_ALGEBRA;
             return null;
         }
 
         function loadCompletedState() {
-            // Cargar Física I
-            const completedFisica = JSON.parse(localStorage.getItem(STORAGE_KEY_FISICA) || '[]');
-            applyState(document.getElementById(getContainerId('Fisica')), completedFisica);
+            // Cargar estado de progreso
+            applyState(document.getElementById(getContainerId('Fisica')), JSON.parse(localStorage.getItem(STORAGE_KEY_FISICA) || '[]'));
+            applyState(document.getElementById(getContainerId('Analisis')), JSON.parse(localStorage.getItem(STORAGE_KEY_ANALISIS) || '[]'));
+            applyState(document.getElementById(getContainerId('Algebra')), JSON.parse(localStorage.getItem(STORAGE_KEY_ALGEBRA) || '[]'));
+            
+            // Cargar nombres personalizados (items de lista)
+            loadCustomNames('Fisica'); 
+            loadCustomNames('Analisis');
+            loadCustomNames('Algebra');
 
-            // Cargar Análisis Matemático I
-            const completedAnalisis = JSON.parse(localStorage.getItem(STORAGE_KEY_ANALISIS) || '[]');
-            applyState(document.getElementById(getContainerId('Analisis')), completedAnalisis);
-            loadCustomNames('Analisis'); // Cargar nombres personalizados
-
-            // Cargar Álgebra y Geometría Analítica I (NUEVO)
-            const completedAlgebra = JSON.parse(localStorage.getItem(STORAGE_KEY_ALGEBRA) || '[]');
-            applyState(document.getElementById(getContainerId('Algebra')), completedAlgebra);
-            loadCustomNames('Algebra'); // Cargar nombres personalizados
+            // Cargar títulos de unidad (h2)
+            loadTitles('Analisis');
+            loadTitles('Algebra');
         }
         
         function applyState(container, completedIds) {
-             // El código para Física I no está en un solo div, por lo que este bucle debe ser más robusto.
-             // Para simplificar, asumiremos que los selectores .unidad-item son suficientes si se llama al contenedor correcto.
-             if (!container) return; // Protección
+             if (!container) return; 
 
              container.querySelectorAll('.unidad-item').forEach(item => {
                 const id = item.getAttribute('data-unidad-id');
@@ -325,14 +348,7 @@
             saveCompletedState(materia);
         }
 
-        // --- Funciones para carga manual de nombres (Analisis y Algebra) ---
-
-        function getCustomNamesStorageKey(materia) {
-            // Solo para materias con unidades genéricas (Analisis y Algebra)
-            if (materia === 'Analisis') return 'analisisCustomNames';
-            if (materia === 'Algebra') return 'algebraCustomNames'; // NUEVA CLAVE
-            return null;
-        }
+        // --- Funciones para guardar nombres editados (ítems de lista) ---
 
         function saveCustomNames(materia) {
             const key = getCustomNamesStorageKey(materia);
@@ -355,22 +371,77 @@
             
             const customNames = JSON.parse(localStorage.getItem(key) || '{}');
             const containerId = getContainerId(materia);
+            const container = document.getElementById(containerId);
 
-            document.getElementById(containerId).querySelectorAll('.item-text').forEach(itemText => {
+            if (!container) return;
+
+            container.querySelectorAll('.item-text').forEach(itemText => {
                 const parentLi = itemText.closest('.unidad-item');
                 const id = parentLi.getAttribute('data-unidad-id');
                 
-                if (customNames[id]) {
+                // 1. Cargar nombre personalizado si existe
+                if (customNames[id] || (materia === 'Fisica' && customNames[id] === "")) { 
                     itemText.textContent = customNames[id];
                 }
                 
-                // Asegurar que al escribir, se guarde el cambio
+                // 2. Añadir eventos para guardar al editar
                 itemText.addEventListener('blur', () => saveCustomNames(materia));
+                
                 itemText.addEventListener('keydown', (event) => {
                     if (event.key === 'Enter') {
-                        event.preventDefault(); // Evita salto de línea
+                        event.preventDefault(); 
                         saveCustomNames(materia);
-                        itemText.blur(); // Sale del modo edición
+                        itemText.blur(); 
+                    }
+                });
+            });
+        }
+
+        // --- NUEVAS Funciones para guardar TÍTULOS DE UNIDAD (h2) ---
+
+        function saveTitles(materia) {
+            const key = getTitleNamesStorageKey(materia);
+            const containerId = getContainerId(materia);
+
+            if (!key || !containerId) return;
+            
+            const customTitles = {};
+            // Selecciona todos los <h2> con el atributo de ID de título
+            document.getElementById(containerId).querySelectorAll('h2[data-title-id]').forEach(titleH2 => {
+                const id = titleH2.getAttribute('data-title-id');
+                customTitles[id] = titleH2.textContent;
+            });
+            
+            localStorage.setItem(key, JSON.stringify(customTitles));
+        }
+
+        function loadTitles(materia) {
+            const key = getTitleNamesStorageKey(materia);
+            const containerId = getContainerId(materia);
+
+            if (!key || !containerId) return;
+
+            const customTitles = JSON.parse(localStorage.getItem(key) || '{}');
+            const container = document.getElementById(containerId);
+
+            if (!container) return;
+
+            container.querySelectorAll('h2[data-title-id]').forEach(titleH2 => {
+                const id = titleH2.getAttribute('data-title-id');
+                
+                // 1. Cargar título personalizado
+                if (customTitles[id]) { 
+                    titleH2.textContent = customTitles[id];
+                }
+                
+                // 2. Añadir eventos para guardar al editar
+                titleH2.addEventListener('blur', () => saveTitles(materia));
+                
+                titleH2.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); 
+                        saveTitles(materia);
+                        titleH2.blur(); 
                     }
                 });
             });
