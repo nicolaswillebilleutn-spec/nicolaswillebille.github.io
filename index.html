@@ -56,7 +56,7 @@
             margin-top: 0;
             /* Importante para la edición del título */
             outline: none; 
-            cursor: text;
+            cursor: text; /* Mantiene cursor de texto para los editables */
         }
         
         /* Lista de unidades */
@@ -164,14 +164,15 @@
                         UNIDADES_FISICA.forEach((nombre, index) => {
                             const cardHtml = `
                                 <div class="materia-card" data-unidad-card-id="FIS-${index + 1}">
-                                    <h2>${nombre.split(':')[0]}</h2> <ul class="unidad-list">
+                                    <h2>${nombre}</h2> 
+                                    <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Fisica')" data-unidad-id="FIS-${index + 1}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">${nombre} (Teoría)</span>
+                                            <span class="item-text" contenteditable="true">Teoría</span>
                                         </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Fisica')" data-unidad-id="FIS-${index + 1}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true">Práctica de ${nombre.split(':')[0]}</span>
+                                            <span class="item-text" contenteditable="true">Práctica/Problemas</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -198,12 +199,10 @@
                                     <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Analisis')" data-unidad-id="ANA-${i}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true"></span>
-                                        </li>
+                                            <span class="item-text" contenteditable="true"></span> </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Analisis')" data-unidad-id="ANA-${i}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true"></span>
-                                        </li>
+                                            <span class="item-text" contenteditable="true"></span> </li>
                                     </ul>
                                 </div>
                             `;
@@ -229,12 +228,10 @@
                                     <ul class="unidad-list">
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Algebra')" data-unidad-id="ALG-${i}-T">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true"></span>
-                                        </li>
+                                            <span class="item-text" contenteditable="true"></span> </li>
                                         <li class="unidad-item" onclick="toggleComplete(this, 'Algebra')" data-unidad-id="ALG-${i}-P">
                                             <span class="status-icon">❌</span>
-                                            <span class="item-text" contenteditable="true"></span>
-                                        </li>
+                                            <span class="item-text" contenteditable="true"></span> </li>
                                     </ul>
                                 </div>
                             `;
@@ -260,8 +257,8 @@
         const CUSTOM_NAMES_KEY_ANALISIS = 'analisisCustomNames';
         const CUSTOM_NAMES_KEY_ALGEBRA = 'algebraCustomNames';
         // Claves de títulos de unidad (para los <h2>)
-        const TITLE_NAMES_KEY_ANALISIS = 'analisisTitleNames'; // NUEVA CLAVE
-        const TITLE_NAMES_KEY_ALGEBRA = 'algebraTitleNames';   // NUEVA CLAVE
+        const TITLE_NAMES_KEY_ANALISIS = 'analisisTitleNames';
+        const TITLE_NAMES_KEY_ALGEBRA = 'algebraTitleNames';
 
 
         function getStorageKey(materia) {
@@ -285,7 +282,6 @@
             return null;
         }
         
-        // NUEVA FUNCIÓN para obtener la clave de los títulos
         function getTitleNamesStorageKey(materia) {
             if (materia === 'Analisis') return TITLE_NAMES_KEY_ANALISIS;
             if (materia === 'Algebra') return TITLE_NAMES_KEY_ALGEBRA;
@@ -397,7 +393,7 @@
             });
         }
 
-        // --- NUEVAS Funciones para guardar TÍTULOS DE UNIDAD (h2) ---
+        // --- Funciones para guardar TÍTULOS DE UNIDAD (h2) ---
 
         function saveTitles(materia) {
             const key = getTitleNamesStorageKey(materia);
